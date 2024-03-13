@@ -42,38 +42,40 @@ npm run ios
 yarn ios
 ```
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
+### Stack navigation Header issue
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+This issue happens only in React native new architecture. When headerShown is false or custom header is passed, in the select component used (react-native-modal-dropdown) the dropdown opens at expected position.  
 
-## Step 3: Modifying your App
+But by default when no options are passed, the dropdown opens at a position above the expected one and the difference between the expected and actual position is the header height. This is not narrowed down to the select component alone. This also happens for popover component (react-native-popover-view). We have narrowed it down to the default header used in the @react-navigation/stack but not able to debug further.
 
-Now that you have successfully run the app, let's modify it.
+Dropdown and popover components opening at incorrect position when using default header in React Navigation 6 stack
+Environment:
 
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
+React Native version: 0.73.6
+@react-navigation/stack version: 6.3.28
+React Native new architecture: Fabric
+Device/OS: iOS
 
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
+Issue Description:
 
-## Congratulations! :tada:
+When using the default header in @react-navigation/stack:
 
-You've successfully run and modified your React Native App. :partying_face:
+Dropdown components (react-native-modal-dropdown) open at a position shifted above the expected position by the header height.
+Popover components (react-native-popover-view) exhibit the same behavior.
 
-### Now what?
+Additional Observations:
+The issue does not occur when:
+headerShown is set to false.
+A custom header is provided.
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
+Steps to Reproduce:
+https://github.com/ManiTWIndia/stack-navigation-header-issue
 
-# Troubleshooting
+Dropdown and popover components should open at the correct position, aligned with the trigger element, regardless of header settings.
+Request for Assistance:
 
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+Request guidance on how to debug this issue further to pinpoint the exact cause.
+If it's a bug in @react-navigation/stack, request a fix.
 
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+Appreciation:
+Thank the maintainers for their time and consideration.
